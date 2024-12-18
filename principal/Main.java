@@ -1,7 +1,7 @@
 package principal;
 
 import dominio.*;
-import service.*;
+import servico.*;
 
 import java.util.Scanner;
 
