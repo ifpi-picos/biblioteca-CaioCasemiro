@@ -10,7 +10,7 @@ public class Emprestimo {
     private LocalDate dataEmprestimo;
     private LocalDate dataDevolucao;
 
-    public Emprestimo(int idEmprestimo, Usuario usuario, Livro livro){
+    public Emprestimo(int idEmprestimo, Usuario usuario, Livro livro) {
         this.idEmprestimo = idEmprestimo;
         this.usuario = usuario;
         this.livro = livro;
@@ -19,39 +19,40 @@ public class Emprestimo {
         this.livro.setDisponivel(false);
     }
 
-    public void finalizarEmprestimo(){
+    public void finalizarEmprestimo() {
         livro.setDisponivel(true);
-        System.out.println("Empréstimo finalizado.Livro devolvido com sucesso!");
+        System.out.println("Empréstimo finalizado. Livro devolvido com sucesso!");
     }
 
-    public boolean estaAtrasado(){
+    public boolean estaAtrasado() {
         return LocalDate.now().isAfter(dataDevolucao);
     }
 
-    public double calcularMulta(){
-        if (estaAtrasado()){
+    public double calcularMulta() {
+        if (estaAtrasado()) {
             long diasAtraso = ChronoUnit.DAYS.between(dataDevolucao, LocalDate.now());
-            return diasAtraso*2.0;
-        } return 0.0;
+            return diasAtraso * 2.0;
+        }
+        return 0.0;
     }
 
-    public int getIdEmprestimo(){
+    public int getIdEmprestimo() {
         return idEmprestimo;
     }
 
-    public Usuario getUsuario(){
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public Livro getLivro(){
+    public Livro getLivro() {
         return livro;
     }
 
-    public LocalDate getDataEmprestimo(){
+    public LocalDate getDataEmprestimo() {
         return dataEmprestimo;
     }
 
-    public LocalDate getDataDevolucao(){
+    public LocalDate getDataDevolucao() {
         return dataDevolucao;
     }
 }
