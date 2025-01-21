@@ -10,26 +10,28 @@ public class Biblioteca {
     private List<Usuario> usuarios;
     private List<Emprestimo> emprestimos;
     private Usuario usuarioLogado;
+    private Notificacao notificacao;
 
-    public Biblioteca() {
+    public Biblioteca(Notificacao notificacao) {
         this.livros = new ArrayList<>();
         this.usuarios = new ArrayList<>();
         this.emprestimos = new ArrayList<>();
         this.usuarioLogado = null;
+        this.notificacao = notificacao;
     }
 
     public void adicionarLivro(Livro livro) {
         livros.add(livro);
-        System.out.println("Livro adicionado: " + livro.getTitulo());
+        notificacao.enviarNotificacao("Livro adicionado: " + livro.getTitulo());;
     }
 
     public void listarLivros() {
         if (livros.isEmpty()) {
-            System.out.println("Nenhum livro cadastrado!");
+            notificacao.enviarNotificacao("Nenhum livro cadastrado!");
         } else {
             for (Livro livro : livros) {
                 String status = livro.isDisponivel() ? "Disponível" : "Emprestado";
-                System.out.println("Título: " + livro.getTitulo() + " | Autor: " + livro.getAutor() + " | Status: " + status);
+                notificacao.enviarNotificacao("Título: " + livro.getTitulo() + " | Autor: " + livro.getAutor() + " | Status: " + status);
             }
         }
     }
@@ -46,13 +48,13 @@ public class Biblioteca {
                 .orElse(null);
 
         if (usuario == null || livro == null) {
-            System.out.println("Usuário ou livro não encontrado ou livro indisponível.");
+            notificacao.enviarNotificacao("Usuário ou livro não encontrado ou livro indisponível.");
             return;
         }
 
         Emprestimo emprestimo = new Emprestimo(emprestimos.size() + 1, usuario, livro);
         emprestimos.add(emprestimo);
-        System.out.println("Empréstimo realizado: " + livro.getTitulo() + " para " + usuario.getNomeUsuario());
+        notificacao.enviarNotificacao("Empréstimo realizado: " + livro.getTitulo() + " para " + usuario.getNomeUsuario());
     }
 
     public void devolverLivro(String tituloLivro) {
@@ -62,17 +64,17 @@ public class Biblioteca {
                 .orElse(null);
 
         if (emprestimo == null) {
-            System.out.println("Livro não encontrado ou já devolvido.");
+            notificacao.enviarNotificacao("Livro não encontrado ou já devolvido.");
             return;
         }
 
         emprestimo.finalizarEmprestimo();
-        System.out.println("Livro devolvido com sucesso!");
+        notificacao.enviarNotificacao("Livro devolvido com sucesso!");
     }
 
     public void listarHistoricoUsuario() {
         if (usuarioLogado == null) {
-            System.out.println("Nenhum usuário logado.");
+            notificacao.enviarNotificacao("Nenhum usuário logado.");
             return;
         }
 
@@ -81,11 +83,11 @@ public class Biblioteca {
                 .toList();
 
         if (historico.isEmpty()) {
-            System.out.println("Nenhum histórico encontrado para o usuário " + usuarioLogado.getNomeUsuario());
+            notificacao.enviarNotificacao("Nenhum histórico encontrado para o usuário " + usuarioLogado.getNomeUsuario());
         } else {
-            System.out.println("Histórico de empréstimos do usuário " + usuarioLogado.getNomeUsuario() + ":");
+            notificacao.enviarNotificacao("Histórico de empréstimos do usuário " + usuarioLogado.getNomeUsuario() + ":");
             for (Emprestimo emprestimo : historico) {
-                System.out.println("- Livro: " + emprestimo.getLivro().getTitulo() + " | Data de empréstimo: " + emprestimo.getDataEmprestimo());
+                notificacao.enviarNotificacao("- Livro: " + emprestimo.getLivro().getTitulo() + " | Data de empréstimo: " + emprestimo.getDataEmprestimo());
             }
         }
     }
@@ -93,27 +95,27 @@ public class Biblioteca {
     public void cadastrarUsuario(String nome, String senha) {
         Usuario usuario = new Usuario(nome, senha);
         usuarios.add(usuario);
-        System.out.println("Usuário cadastrado com sucesso! ID: " + usuario.getId());
+        notificacao.enviarNotificacao("Usuário cadastrado com sucesso! ID: " + usuario.getId());
     }
 
     public boolean login(String nomeUsuario, String senha) {
         for (Usuario usuario : usuarios) {
             if (usuario.getNomeUsuario().equals(nomeUsuario) && usuario.autenticar(senha)) {
                 usuarioLogado = usuario;
-                System.out.println("Login realizado com sucesso! Bem-vindo(a), " + usuarioLogado.getNomeUsuario());
+                notificacao.enviarNotificacao("Login realizado com sucesso! Bem-vindo(a), " + usuarioLogado.getNomeUsuario());
                 return true;
             }
         }
-        System.out.println("Nome de usuário ou senha inválidos.");
+        notificacao.enviarNotificacao("Nome de usuário ou senha inválidos.");
         return false;
     }
 
     public void logout() {
         if (usuarioLogado != null) {
-            System.out.println("Logout realizado. Até logo, " + usuarioLogado.getNomeUsuario() + "!");
+            notificacao.enviarNotificacao("Logout realizado. Até logo, " + usuarioLogado.getNomeUsuario() + "!");
             usuarioLogado = null;
         } else {
-            System.out.println("Nenhum usuário está logado.");
+            notificacao.enviarNotificacao("Nenhum usuário está logado.");
         }
     }
 

@@ -7,12 +7,13 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Biblioteca biblioteca = new Biblioteca();
+        Notificacao notificacao = new NotificacaoEmail();
+        Biblioteca biblioteca = new Biblioteca(notificacao);
         int opcao;
 
         do {
             System.out.println("\n=== SISTEMA DE GERENCIAMENTO DE BIBLIOTECA ===");
-            if (!biblioteca.isUsuarioLogado()) {
+            if (!biblioteca.isUsuarioLogado()) {    
                 System.out.println("1. Cadastrar usuário");
                 System.out.println("2. Login");
                 System.out.println("3. Sair");
