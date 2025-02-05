@@ -3,13 +3,11 @@ package dominio;
 public class Livro {
     private String titulo;
     private String autor;
-    private String genero;
     private boolean isDisponivel;
 
-    public Livro(String titulo, String autor, String genero, boolean isDisponivel) {
+    public Livro(String titulo, String autor, boolean isDisponivel) {
         this.titulo = titulo;
         this.autor = autor;
-        this.genero = genero;
         this.isDisponivel = isDisponivel;
     }
 
@@ -23,10 +21,6 @@ public class Livro {
 
     public String getAutor() {
         return autor;
-    }
-
-    public String getGenero() {
-        return genero;
     }
 
     public boolean isDisponivel() {

@@ -68,9 +68,7 @@ public class Main {
                         String titulo = scanner.nextLine();
                         System.out.println("Digite o autor: ");
                         String autor = scanner.nextLine();
-                        System.out.println("Digite o gênero do livro: ");
-                        String genero = scanner.nextLine();
-                        Livro livro = new Livro(titulo, autor, genero, true);
+                        Livro livro = new Livro(titulo, autor, true);
                         biblioteca.adicionarLivro(livro);
                         break;
 
